@@ -59,5 +59,16 @@ jobs:
       - name: Selenium Preparation
         run: docker run --network=isolated -d -p 4444:4444 -v /dev/shm:/dev/shm --name standalone-browser selenium/standalone-${{ matrix.browser }}:latest
 
+      - name: Run test
+        env:
+          BROWSER_NAME: ${{ matrix.browser }}
+        run: python tests/hello_aut.py ${{ env.URL }}
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Screenshot-${{ matrix.browser }}
+          path: screenshot.png
+          
       - name: stop docker
         run: docker stop docker-apache
