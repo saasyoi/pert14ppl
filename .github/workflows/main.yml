@@ -44,5 +44,8 @@ jobs:
       - name: Run test
         run: python tests/hello_example.py
 
+      - name: Run test
+        run: python tests/hello_aut.py ${{ env.URL }}
+
       - name: stop docker
         run: docker stop docker-apache
