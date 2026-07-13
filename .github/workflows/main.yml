@@ -8,6 +8,9 @@ jobs:
     name: Functional Test
     permissions: write-all
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [firefox, chrome, edge]
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v4
@@ -52,6 +55,9 @@ jobs:
         with:
           name: Screenshot
           path: screenshot.png
+
+      - name: Selenium Preparation
+        run: docker run --network=isolated -d -p 4444:4444 -v /dev/shm:/dev/shm --name standalone-browser selenium/standalone-${{ matrix.browser }}:latest
 
       - name: stop docker
         run: docker stop docker-apache
