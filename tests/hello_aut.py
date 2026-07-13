@@ -18,6 +18,7 @@ class AutTest(unittest.TestCase):
             url = "http://localhost"
             
         self.browser.get(url)
+        self.browser.save_screenshot('screenshot.png')
         expected_result = "Welcome back, Guest!"
         actual_result = self.browser.find_element(By.TAG_NAME, 'p')
         self.assertIn(expected_result, actual_result.text)
